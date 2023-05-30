@@ -2,7 +2,9 @@ import { useEffect, useState,useRef } from "react";
 import {  useParams } from "react-router-dom";
 import { getMovieDetails } from "api";
 import { Link } from "react-router-dom";
-import { Outlet, useLocation} from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
+import { ImgMain } from "components/Cast.styled,";
+
 
 
 
@@ -44,8 +46,11 @@ export default function Cards() {
       ) : Object.keys(movieDetails).length > 0 ? (
         <div>
           <h2>{movieDetails.original_title}</h2>
-          <p>{movieDetails.overview}</p>
-          <img src={`https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`} alt={movieDetails.title} />
+            <p>{movieDetails.overview}</p>
+            <ImgMain>
+            <img src={`https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`} alt={movieDetails.title} />
+            </ImgMain>
+
         <ul>
         <li
         ><Link to="Cast">Cast</Link>
@@ -59,7 +64,7 @@ export default function Cards() {
       ) : (
         <p>No movie details available.</p>
       )}
-      <h1>{params.id}</h1>
+      
     </div>
   );
 }

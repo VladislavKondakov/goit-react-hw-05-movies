@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getMovieCredits } from "api";
+import { ImgGallery, DivGallery } from "./filmsgallery.styled";
+
 
 export const Cast = () => {
   const castParams = useParams();
@@ -31,12 +33,12 @@ export const Cast = () => {
   }
 
   return (
-    <div>
+    <DivGallery>
       {actors.map((actor) => (
         <div key={actor.id}>
           <h2>{actor.name}</h2>
           {actor.profile_path ? (
-            <img
+            <ImgGallery
               src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`}
               alt={actor.name}
             />
@@ -45,6 +47,6 @@ export const Cast = () => {
           )}
         </div>
       ))}
-    </div>
+    </DivGallery>
   );
 };
