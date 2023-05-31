@@ -5,8 +5,8 @@ export const Layout = () => {
     return (
     <div>
         <nav>
-        <NavLink to="/">Home Page</NavLink>
-        <NavLink to="movie">Colection</NavLink>
+        <NavLink to="/">Colection</NavLink>
+        <NavLink to="movie">Home Page</NavLink>
             </nav>
             <Suspense>
                 <Outlet />
