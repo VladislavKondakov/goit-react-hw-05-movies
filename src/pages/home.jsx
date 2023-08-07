@@ -1,26 +1,37 @@
 import { getSearchMovies } from "api";
 import { useEffect, useState } from "react";
-import { Link, useLocation, useSearchParams} from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [filmId, setFilmId] = useState(searchParams.get('filmId') || '');
+  const [filmId, setFilmId] = useState(searchParams.get("filmId") || "");
   const [films, setFilms] = useState([]);
 
-  const location = useLocation()
+  const location = useLocation();
 
-  const updateQueryString = (evt) => {
+  const updateQueryString = async (evt) => {
     evt.preventDefault();
     const newSearchParams = new URLSearchParams(searchParams);
 
     if (filmId === "") {
-      newSearchParams.delete('filmId');
+      newSearchParams.delete("filmId");
     } else {
-      newSearchParams.set('filmId', filmId);
+      newSearchParams.set("filmId", filmId);
     }
 
     setSearchParams(newSearchParams);
+
+    try {
+      const data = await getSearchMovies(newSearchParams.get("filmId"));
+      setFilms(data.results); // Store only the 'results' array
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
+
+  useEffect(() => {
+    fetchMovieSearch(searchParams.get("filmId"));
+  }, [searchParams]);
 
   const fetchMovieSearch = async (params) => {
     try {
@@ -30,10 +41,6 @@ export default function Home() {
       console.error("Error:", error);
     }
   };
-
-  useEffect(() => {
-    fetchMovieSearch(searchParams.get('filmId'));
-  }, [searchParams]);
 
   return (
     <div>
@@ -48,7 +55,9 @@ export default function Home() {
       {/* Render the films */}
       {films.map((film) => (
         <div key={film.id}>
-          <Link  state={{ from: location }} to={`/movie/${film.id}`}>{film.title}</Link>
+          <Link state={{ from: location }} to={`/movie/${film.id}`}>
+            {film.title}
+          </Link>
           {film.backdrop_path && (
             <div>
               <img
