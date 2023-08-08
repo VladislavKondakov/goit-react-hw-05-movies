@@ -4,6 +4,7 @@ import { getMovieDetails } from "api";
 import { Link } from "react-router-dom";
 import { Outlet, useLocation } from "react-router-dom";
 import { ImgMain } from "components/Cast.styled,";
+import { DivMainInf,DivTextCollection,ButtonGallery,DivButtons,ButtonBack} from "components/filmsgallery.styled";
 
 
 
@@ -40,25 +41,37 @@ export default function Cards() {
 
   return (
     <div>
-      <Link to={backLinkLocationRef.current}>Go Back</Link>
+      <Link to={backLinkLocationRef.current}>
+       <ButtonBack>Go Back</ButtonBack> 
+      </Link>
       {isLoading ? (
         <p>Loading movie details...</p>
       ) : Object.keys(movieDetails).length > 0 ? (
         <div>
-          <h2>{movieDetails.original_title}</h2>
+            <DivMainInf>
+               <DivTextCollection>
+            <h2>{movieDetails.original_title}</h2>
             <p>{movieDetails.overview}</p>
-            <ImgMain>
+              </DivTextCollection>
+              <ImgMain>
             <img src={`https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`} alt={movieDetails.title} />
             </ImgMain>
-
+          </DivMainInf>
         <ul>
-        <li
-        ><Link to="Cast">Cast</Link>
+        <DivButtons>
+              <li
+              ><Link to="Cast">
+                <ButtonGallery>Cast</ButtonGallery> 
+                </Link>
         </li>
         <li
-        ><Link to="Reviews">Reviews</Link>
-                          </li>
-       < Outlet/>
+              ><Link to="Reviews">
+                <ButtonGallery>Reviews</ButtonGallery> 
+              </Link>
+       </li>
+       </DivButtons>
+                < Outlet />
+              
     </ul>
      </div>
       ) : (

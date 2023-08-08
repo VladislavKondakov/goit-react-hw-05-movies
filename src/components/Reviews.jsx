@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getMovieReviews } from "api";
 import { useParams } from "react-router-dom";
+import { DivReviews,DivMainReviews } from "./filmsgallery.styled";
 
 export const Reviews = () => {
   const reviewParams = useParams();
@@ -23,18 +24,18 @@ export const Reviews = () => {
   }, [reviewParams.id]);
 
   return (
-    <div>
+    <DivMainReviews>
       {reviews.length === 0 ? (
         <p>На данный фильм отзывов нет</p>
       ) : (
         reviews.map((review) => (
-  <div key={review.id}>
+  <DivReviews key={review.id}>
     <h2>{review.author}</h2>
     <p>{review.content}</p>
-  </div>
+  </DivReviews>
 ))
 
       )}
-    </div>
+    </DivMainReviews>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getMovieCredits } from "api";
-import { ImgGallery, DivGallery } from "./filmsgallery.styled";
+import { ImgGallery, DivGallery,DivCast } from "./filmsgallery.styled";
 
 
 export const Cast = () => {
@@ -35,17 +35,21 @@ export const Cast = () => {
   return (
     <DivGallery>
       {actors.map((actor) => (
-        <div key={actor.id}>
+        <DivCast key={actor.id}>
           <h2>{actor.name}</h2>
           {actor.profile_path ? (
             <ImgGallery
               src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`}
               alt={actor.name}
+              
             />
           ) : (
-            <p>Изображение недоступно</p>
+              <img src="https://1080motion.com/wp-content/uploads/2018/06/NoImageFound.jpg.png" alt=""
+                width="300"
+                height="450"
+              />
           )}
-        </div>
+        </DivCast>
       ))}
     </DivGallery>
   );
